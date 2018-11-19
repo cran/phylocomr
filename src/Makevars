@@ -1,0 +1,31 @@
+INSTDIR=../inst/bin${R_ARCH}
+LIBPHYLOCOM=libphylocom/io.o libphylocom/new2fy.o  libphylocom/traits.o \
+	libphylocom/comstruct.o libphylocom/nrutil.o libphylocom/fy2new.o libphylocom/bladj.o \
+	libphylocom/comnode.o libphylocom/prune.o libphylocom/comtrait.o libphylocom/stats.o \
+	libphylocom/combase.o
+
+# Debugging flag
+# PKG_CFLAGS = -Wno-unused
+
+all: clean executables
+
+executables: phylocom ecovolve phylomatic
+
+libphylocom.a: $(LIBPHYLOCOM)
+	mkdir -p $(INSTDIR)
+	$(AR) rcs libphylocom.a $(LIBPHYLOCOM)
+
+phylocom: libphylocom.a libphylocom/main.o
+	$(CC) $(CPPFLAGS) $(CFLAGS) -o phylocom libphylocom/main.o -L. -lphylocom -lm
+	cp -f phylocom $(INSTDIR)
+
+ecovolve: libphylocom.a libphylocom/ecomain.o
+	$(CC) $(CPPFLAGS) $(CFLAGS) -o ecovolve libphylocom/ecomain.o -L. -lphylocom -lm
+	cp -f ecovolve $(INSTDIR)
+
+phylomatic: libphylocom.a libphylocom/phylomatic.o
+	$(CC) $(CPPFLAGS) $(CFLAGS) -o phylomatic libphylocom/phylomatic.o -L. -lphylocom -lm
+	cp -f phylomatic $(INSTDIR)
+
+clean:
+	rm -Rf $(OBJECTS) libphylocom/*.o libphylocom.a phylocom ecovolve phylomatic
