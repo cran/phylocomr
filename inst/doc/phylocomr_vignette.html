@@ -11,7 +11,7 @@
 
 <meta name="author" content="Scott Chamberlain and Jeroen Ooms" />
 
-<meta name="date" content="2018-11-09" />
+<meta name="date" content="2018-11-28" />
 
 <title>Introduction to the phylocomr package</title>
 
@@ -1487,7 +1487,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">Introduction to the phylocomr package</h1>
 <h4 class="author"><em>Scott Chamberlain and Jeroen Ooms</em></h4>
-<h4 class="date"><em>2018-11-09</em></h4>
+<h4 class="date"><em>2018-11-28</em></h4>
 
 </div>
 
@@ -1512,17 +1512,8 @@ div.tocify {
 <pre class="r"><code>taxa_file &lt;- system.file(&quot;examples/taxa&quot;, package = &quot;phylocomr&quot;)
 phylo_file &lt;- system.file(&quot;examples/phylo&quot;, package = &quot;phylocomr&quot;)
 (taxa_str &lt;- readLines(taxa_file))
-#&gt; [1] &quot;campanulaceae/lobelia/lobelia_conferta&quot;          
-#&gt; [2] &quot;cyperaceae/mapania/mapania_africana&quot;             
-#&gt; [3] &quot;amaryllidaceae/narcissus/narcissus_cuatrecasasii&quot;
 (phylo_str &lt;- readLines(phylo_file))
-#&gt; [1] &quot;(((((eliea_articulata,homalanthus_populneus)malpighiales,rosa_willmottiae),((macrocentrum_neblinae,qualea_clavata),hibiscus_pohlii)malvids),(((lobelia_conferta,((millotia_depauperata,(layia_chrysanthemoides,layia_pentachaeta)layia),senecio_flanaganii)asteraceae)asterales,schwenkia_americana),tapinanthus_buntingii)),(narcissus_cuatrecasasii,mapania_africana))poales_to_asterales;&quot;
-ph_phylomatic(taxa = taxa_str, phylo = phylo_str)
-#&gt; [1] &quot;(lobelia_conferta:5.000000,(mapania_africana:1.000000,narcissus_cuatrecasasii:1.000000):1.000000)poales_to_asterales;\n&quot;
-#&gt; attr(,&quot;taxa_file&quot;)
-#&gt; [1] &quot;/var/folders/fc/n7g_vrvn0sx_st0p8lxb3ts40000gn/T//RtmpU8MrR6/taxa_3df8509f4496&quot;
-#&gt; attr(,&quot;phylo_file&quot;)
-#&gt; [1] &quot;/var/folders/fc/n7g_vrvn0sx_st0p8lxb3ts40000gn/T//RtmpU8MrR6/phylo_3df884ffd34&quot;</code></pre>
+ph_phylomatic(taxa = taxa_str, phylo = phylo_str)</code></pre>
 </div>
 <div id="aot" class="section level2">
 <h2>aot</h2>
@@ -1532,63 +1523,7 @@ traitsdf_file &lt;- system.file(&quot;examples/traits_aot_df&quot;, package = &q
 traits &lt;- read.table(text = readLines(traitsdf_file), header = TRUE,
   stringsAsFactors = FALSE)
 phylo_str &lt;- readLines(phylo_file)
-ph_aot(traits = traits, phylo = phylo_str)
-#&gt; $trait_conservatism
-#&gt; # A tibble: 124 x 28
-#&gt;    trait trait.name  node name    age ntaxa n.nodes tip.mn tmn.ranklow
-#&gt;    &lt;int&gt; &lt;chr&gt;      &lt;int&gt; &lt;chr&gt; &lt;dbl&gt; &lt;int&gt;   &lt;int&gt;  &lt;dbl&gt;       &lt;int&gt;
-#&gt;  1     1 traitA         0 A         5    32       2   1.75        1000
-#&gt;  2     1 traitA         1 B         4    16       2   1.75         648
-#&gt;  3     1 traitA         2 C         3     8       2   1.75         647
-#&gt;  4     1 traitA         3 D         2     4       2   1.5          258
-#&gt;  5     1 traitA         4 E         1     2       2   1             58
-#&gt;  6     1 traitA         7 F         1     2       2   2           1000
-#&gt;  7     1 traitA        10 G         2     4       2   2           1000
-#&gt;  8     1 traitA        11 H         1     2       2   2           1000
-#&gt;  9     1 traitA        14 I         1     2       2   2           1000
-#&gt; 10     1 traitA        17 J         3     8       2   1.75         676
-#&gt; # ... with 114 more rows, and 19 more variables: tmn.rankhi &lt;int&gt;,
-#&gt; #   tip.sd &lt;dbl&gt;, tsd.ranklow &lt;int&gt;, tsd.rankhi &lt;int&gt;, node.mn &lt;dbl&gt;,
-#&gt; #   nmn.ranklow &lt;int&gt;, nmn.rankhi &lt;int&gt;, nod.sd &lt;dbl&gt;, nsd.ranklow &lt;int&gt;,
-#&gt; #   nsd.rankhi &lt;int&gt;, sstipsroot &lt;dbl&gt;, sstips &lt;dbl&gt;,
-#&gt; #   percvaramongnodes &lt;dbl&gt;, percvaratnode &lt;dbl&gt;, contributionindex &lt;dbl&gt;,
-#&gt; #   sstipvnoderoot &lt;dbl&gt;, sstipvnode &lt;dbl&gt;, ssamongnodes &lt;dbl&gt;,
-#&gt; #   sswithinnodes &lt;dbl&gt;
-#&gt; 
-#&gt; $independent_contrasts
-#&gt; # A tibble: 31 x 17
-#&gt;     node name    age n.nodes contrast1 contrast2 contrast3 contrast4
-#&gt;    &lt;int&gt; &lt;chr&gt; &lt;dbl&gt;   &lt;int&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
-#&gt;  1     0 A         5       2     0         0         0         0.254
-#&gt;  2     1 B         4       2     0         1.03      0         0.516
-#&gt;  3     2 C         3       2     0.267     0.535     0         0    
-#&gt;  4     3 D         2       2     0.577     0         1.15      0    
-#&gt;  5     4 E         1       2     0         0         0.707     0    
-#&gt;  6     7 F         1       2     0         0         0.707     0    
-#&gt;  7    10 G         2       2     0         0         1.15      0    
-#&gt;  8    11 H         1       2     0         0         0.707     0    
-#&gt;  9    14 I         1       2     0         0         0.707     0    
-#&gt; 10    17 J         3       2     0.267     0.535     0         0    
-#&gt; # ... with 21 more rows, and 9 more variables: contrastsd &lt;dbl&gt;,
-#&gt; #   lowval1 &lt;dbl&gt;, hival1 &lt;dbl&gt;, lowval2 &lt;dbl&gt;, hival2 &lt;dbl&gt;,
-#&gt; #   lowval3 &lt;dbl&gt;, hival3 &lt;dbl&gt;, lowval4 &lt;dbl&gt;, hival4 &lt;dbl&gt;
-#&gt; 
-#&gt; $phylogenetic_signal
-#&gt; # A tibble: 4 x 5
-#&gt;   trait  ntaxa varcontr varcn.ranklow varcn.rankhi
-#&gt;   &lt;chr&gt;  &lt;int&gt;    &lt;dbl&gt;         &lt;int&gt;        &lt;int&gt;
-#&gt; 1 traitA    32    0.054             1         1000
-#&gt; 2 traitB    32    0.109             1         1000
-#&gt; 3 traitC    32    0.622            52          949
-#&gt; 4 traitD    32    0.011             1         1000
-#&gt; 
-#&gt; $ind_contrast_corr
-#&gt; # A tibble: 3 x 6
-#&gt;   xtrait ytrait ntaxa  picr  npos ncont
-#&gt;   &lt;chr&gt;  &lt;chr&gt;  &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt;
-#&gt; 1 traitA traitB    32 0.248  18.5    31
-#&gt; 2 traitA traitC    32 0.485  27.5    31
-#&gt; 3 traitA traitD    32 0      16.5    31</code></pre>
+ph_aot(traits = traits, phylo = phylo_str)</code></pre>
 </div>
 <div id="bladj" class="section level2">
 <h2>bladj</h2>

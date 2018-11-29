@@ -6,7 +6,7 @@ Description: Interface to 'Phylocom' (<http://phylodiversity.net/phylocom/>),
     character evolution. Includes low level methods for interacting with
     the three executables, as well as higher level interfaces for methods
     like 'aot', 'ecovolve', 'bladj', 'phylomatic', and more.
-Version: 0.1.0
+Version: 0.1.2
 Authors@R: c(
     person("Jeroen", "Ooms", role = "aut",
         email = "jeroen@berkeley.edu"),
@@ -35,7 +35,7 @@ X-schema.org-keywords: phylogeny, Phylocom, phylodiversity, community
         structure, character evolution, species
 X-schema.org-isPartOf: https://ropensci.org
 NeedsCompilation: yes
-Packaged: 2018-11-10 00:17:50 UTC; sckott
+Packaged: 2018-11-29 01:07:24 UTC; sckott
 Author: Jeroen Ooms [aut],
   Scott Chamberlain [aut, cre] (<https://orcid.org/0000-0003-1444-9135>),
   Cam Webb [cph] (Author of libphylocom (see AUTHORS and COPYRIGHT files
@@ -46,4 +46,4 @@ Author: Jeroen Ooms [aut],
     files for details))
 Maintainer: Scott Chamberlain <sckott@protonmail.com>
 Repository: CRAN
-Date/Publication: 2018-11-19 18:00:16 UTC
+Date/Publication: 2018-11-29 05:20:03 UTC
