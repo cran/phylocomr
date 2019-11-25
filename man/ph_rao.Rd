@@ -51,6 +51,18 @@ phylogenetic diversities excluding within-community diversity
 A measure of within- and among-community diversity taking species
 dissimilarity (phylogenetic dissimilarity) into account
 }
+\details{
+See \link{phylocomr-inputs} for expected input formats
+}
+\section{Taxon name case}{
+
+In the \code{sample} table, if you're passing in a file, the names
+in the third column must be all lowercase; if not,
+we'll lowercase them for you. If you pass in a data.frame, we'll lowercase
+them for your. All phylo tip/node labels are also lowercased to avoid
+any casing problems
+}
+
 \examples{
 sfile <- system.file("examples/sample_comstruct", package = "phylocomr")
 pfile <- system.file("examples/phylo_comstruct", package = "phylocomr")
@@ -63,12 +75,12 @@ phylo_str <- readLines(pfile)
 ph_rao(sample = sampledf, phylo = phylo_str)
 
 # both from files
-sample_str <- paste0(readLines(sfile), collapse = "\\n")
+sample_str <- paste0(readLines(sfile), collapse = "\n")
 sfile2 <- tempfile()
-cat(sample_str, file = sfile2, sep = '\\n')
+cat(sample_str, file = sfile2, sep = '\n')
 pfile2 <- tempfile()
 phylo_str <- readLines(pfile)
-cat(phylo_str, file = pfile2, sep = '\\n')
+cat(phylo_str, file = pfile2, sep = '\n')
 
 ph_rao(sample = sfile2, phylo = pfile2)
 }

@@ -55,6 +55,8 @@ Calculate measures of trait dispersion within each community, and
 compare observed patterns to those expected under a null model.
 }
 \details{
+See \link{phylocomr-inputs} for expected input formats
+
 If you give a data.frame to \code{traits} parameter it expects data.frame like
 \itemize{
 \item species - the taxon labels matching the sample data to \code{sample}
@@ -85,6 +87,15 @@ with the comstruct function.
 \item 3 - Independent swap: Same as for \link{ph_comdist} and
 \link{ph_comstruct}
 }
+}
+
+\section{Taxon name case}{
+
+In the \code{sample} and \code{trait} tables, if you're passing in a file, the names
+in the third and first columns, respectively, must be all lowercase; if not,
+we'll lowercase them for you. If you pass in a data.frame, we'll lowercase
+them for your. All phylo tip/node labels are also lowercased to avoid
+any casing problems
 }
 
 \examples{

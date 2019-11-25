@@ -10,7 +10,7 @@ ph_bladj(ages, phylo)
 \item{ages}{(data.frame/character) ages data.frame, or path to an ages
 file. required. column names do not matter, and are discarded anyway.
 the first column must be the node names, and the second column the node
-ages}
+ages. See Details.}
 
 \item{phylo}{(character/phylo) One of: phylogeny as a newick string (will be
 written to a temp file) - OR path to file with a newick
@@ -26,6 +26,9 @@ and fixes other nodes you might have age estimates for. It then sets all
 other branch lengths by placing the nodes evenly between dated nodes,
 and between dated nodes and terminals (beginning with the longest
 'chains').
+}
+\details{
+See \link{phylocomr-inputs} for expected input formats
 }
 \section{Common Errors}{
 

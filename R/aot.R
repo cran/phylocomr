@@ -6,7 +6,7 @@
 #'
 #' @export
 #' @param traits (data.frame/character) trait data.frame or path to
-#' traits file. required
+#' traits file. required. See Details.
 #' @template phylo
 #' @param randomizations (numeric) number of randomizations. Default: 999
 #' @param trait_contrasts (numeric) Specify which trait should be used as 'x'
@@ -14,6 +14,13 @@
 #' @param ebl_unstconst (logical) Use equal branch lengths and unstandardized
 #' contrasts. Default: `FALSE`
 #' @return a list of data.frames
+#' @details See [phylocomr-inputs] for expected input formats
+#' @section Taxon name case:
+#' In the `traits` table, if you're passing in a file, the names in the
+#' first column must be all lowercase; if not, we'll lowercase them for you.
+#' If you pass in a data.frame, we'll
+#' lowercase them for your. All phylo tip/node labels are also lowercased
+#' to avoid any casing problems
 #' @examples \dontrun{
 #' traits_file <- system.file("examples/traits_aot", package = "phylocomr")
 #' phylo_file <- system.file("examples/phylo_aot", package = "phylocomr")
@@ -43,17 +50,25 @@ ph_aot <- function(traits, phylo, randomizations = 999, trait_contrasts = 1,
   assert(ebl_unstconst, 'logical')
 
   stopifnot(class(traits) %in% c('data.frame', 'character'))
+  tfile <- tempfile("trait_")
   if (inherits(traits, "data.frame")) {
-    tfile <- tempfile("trait_")
+    if (colnames(traits)[1] != "name") {
+      stop("first column name in `traits` must be `name`", call. = FALSE)
+    }
+    if (inherits(traits[,1], c("character", "factor")))
+      traits[,1] <- tolower(traits[,1])
     utils::write.table(prep_traits(traits), file = tfile,
                        quote = FALSE, row.names = FALSE)
-    traits <- tfile
+  } else {
+    stopifnot(file.exists(traits))
+    zz <- tolower(readLines(traits))
+    cat(zz, file = tfile, sep = "\n")
   }
 
   phylo <- phylo_check(phylo)
 
   cdir <- getwd()
-  bdir <- dirname(traits)
+  bdir <- dirname(tfile)
   stopifnot(bdir == dirname(phylo))
   setwd(bdir)
   on.exit(setwd(cdir))
@@ -61,7 +76,7 @@ ph_aot <- function(traits, phylo, randomizations = 999, trait_contrasts = 1,
   out <- suppressWarnings(
     phylocom(c(
       "aotf",
-      "-t", basename(traits),
+      "-t", basename(tfile),
       "-f", basename(phylo),
       "-r", randomizations,
       "-x", trait_contrasts,
@@ -69,6 +84,7 @@ ph_aot <- function(traits, phylo, randomizations = 999, trait_contrasts = 1,
     ), intern = TRUE)
   )
 
+  phylocom_error(out)
   out <- strsplit(out, split = "\n")[[1]]
 
   list(

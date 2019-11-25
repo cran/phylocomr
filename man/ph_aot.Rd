@@ -14,7 +14,7 @@ ph_aot(
 }
 \arguments{
 \item{traits}{(data.frame/character) trait data.frame or path to
-traits file. required}
+traits file. required. See Details.}
 
 \item{phylo}{(character/phylo) One of: phylogeny as a newick string (will be
 written to a temp file) - OR path to file with a newick
@@ -36,6 +36,18 @@ AOT conducts univariate and bivariate tests of phylogenetic signal and
 trait correlations, respectively, and node-level analyses of trait
 means and diversification.
 }
+\details{
+See \link{phylocomr-inputs} for expected input formats
+}
+\section{Taxon name case}{
+
+In the \code{traits} table, if you're passing in a file, the names in the
+first column must be all lowercase; if not, we'll lowercase them for you.
+If you pass in a data.frame, we'll
+lowercase them for your. All phylo tip/node labels are also lowercased
+to avoid any casing problems
+}
+
 \examples{
 \dontrun{
 traits_file <- system.file("examples/traits_aot", package = "phylocomr")

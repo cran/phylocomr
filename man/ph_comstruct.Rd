@@ -39,6 +39,9 @@ phylogenetic taxon distance (MNTD; aka MNND) for each sample, and
 compares them to MPD/MNTD values for randomly generated samples
 (null communities) or phylogenies.
 }
+\details{
+See \link{phylocomr-inputs} for expected input formats
+}
 \section{Null models}{
 
 \itemize{
@@ -66,6 +69,14 @@ versions of the sample/species matrix.
 }
 }
 
+\section{Taxon name case}{
+
+In the \code{sample} table, if you're passing in a file, the names in the
+third column must be all lowercase; if not, we'll lowercase them for you.
+If you pass in a data.frame, we'll lowercase them for your. All phylo
+tip/node labels are also lowercased to avoid any casing problems
+}
+
 \examples{
 sfile <- system.file("examples/sample_comstruct", package = "phylocomr")
 pfile <- system.file("examples/phylo_comstruct", package = "phylocomr")
@@ -77,11 +88,11 @@ phylo_str <- readLines(pfile)
 (res <- ph_comstruct(sample = sampledf, phylo = phylo_str))
 
 # from files
-sample_str <- paste0(readLines(sfile), collapse = "\\n")
+sample_str <- paste0(readLines(sfile), collapse = "\n")
 sfile2 <- tempfile()
-cat(sample_str, file = sfile2, sep = '\\n')
+cat(sample_str, file = sfile2, sep = '\n')
 pfile2 <- tempfile()
-cat(phylo_str, file = pfile2, sep = '\\n')
+cat(phylo_str, file = pfile2, sep = '\n')
 (res <- ph_comstruct(sample = sfile2, phylo = pfile2))
 
 # different null models
